@@ -106,32 +106,34 @@ Below are instructions for how to create an automated ubuntu iso.
      
 Below is a complete example of a working config file. The comment and version 1 at the top are nessasary and will break the installation if not present. You can use **openssl passwd -6 "the_password"** to generate a sha-512 hash for the password value.
 
-     #cloud-config
-      autoinstall:
-        version: 1
-        early-commands:
-          - systemctl stop ssh
-      ssh:
-        install-server: yes
-        allow-pw: yes
-      locale: en_US.UTF-8
-      keyboard:
-        layout: en
-      identity:
-        hostname: changeme
-        password: "$6$mYWDL1/gejskwkK0$Aloc4nYx5lJUw2E5E.cm9LpWmdL5RBAH5AqxlIp1DGvtRrXdefsIUvC3psWSryI8x9Ez/NMC.ej.Oh9Rk.3NU0" # root
-        username: admin
-      packages:
-        - vim
-        - git
-      user-data:
-        disable_root: false
-      late-commands:
-        - echo 'sudo ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
-        - timedatectl set-timezone America/Los_Angeles
-        - sed -i "/^\/swap.img/d" /target/etc/fstab
-        - rm -f /target/swap.img
-        - shutdown -P now
+```
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+    - systemctl stop ssh
+  ssh:
+    install-server: yes
+    allow-pw: yes
+  locale: en_US.UTF-8
+  keyboard:
+    layout: en
+  identity:
+    hostname: changeme
+    password: "$6$mYWDL1/gejskwkK0$Aloc4nYx5lJUw2E5E.cm9LpWmdL5RBAH5AqxlIp1DGvtRrXdefsIUvC3psWSryI8x9Ez/NMC.ej.Oh9Rk.3NU0" # root
+    username: admin
+  packages:
+    - vim
+    - git
+  user-data:
+    disable_root: false
+  late-commands:
+    - echo 'sudo ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+    - timedatectl set-timezone America/Los_Angeles
+    - sed -i "/^\/swap.img/d" /target/etc/fstab
+    - rm -f /target/swap.img
+    - shutdown -P now 
+```
       
 10. Use the following command to build the iso.
 
