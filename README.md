@@ -129,7 +129,8 @@ autoinstall:
     disable_root: false
   late-commands:
     - echo 'sudo ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
-    - timedatectl set-timezone America/Los_Angeles
+    - unlink /etc/localtime
+    - ln -s /usr/share/zoneinfo/America/Los_Angeles /target/etc/localtime
     - sed -i "/^\/swap.img/d" /target/etc/fstab
     - rm -f /target/swap.img
     - shutdown -P now 
